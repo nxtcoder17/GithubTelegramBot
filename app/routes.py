@@ -1,17 +1,31 @@
-from app import app
-from flask import request
+from app import app, bot
+from flask import request, Response
 import json
+from pprint import pprint
 
 
-@app.route('/')
+def parse_message(msg):
+    chat_id, text = msg['message']['chat']['id'], msg['message']['text']
+    return chat_id, text
+
+
+@app.route('/', methods=['POST', 'GET'])
 def index():
-    print("Flask, Web server is UP")
-    return "Flask is running"
+    if request.method == 'POST':
+        msg = request.json
+        pprint(msg)
+        # return Response('OK', status=200)
+        chat_id, text = parse_message(msg)
+        if text.upper() == 'HI':
+            bot.send_message(chat_id, "Fuck it dude")
+        else:
+            bot.send_message(chat_id, text)
+    return Response('OK', status=200)
 
 
 @app.route('/github', methods=['POST'])
 def github_event():
     if request.headers['content-type'] == 'application/json':
-        print(request.json)
+        pprint(request.json)
         return request.json
     return json.dumps({"msg": "No Response"})
