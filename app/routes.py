@@ -27,5 +27,6 @@ def index():
 def github_event():
     if request.headers['content-type'] == 'application/json':
         pprint(request.json)
+        bot.send_message('847119416', request.json)
         return request.json
     return json.dumps({"msg": "No Response"})
