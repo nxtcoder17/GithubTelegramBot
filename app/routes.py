@@ -18,16 +18,18 @@ def index():
         chat_id, text = parse_message(msg)
         if text.upper() == 'HI':
             bot.send_message(chat_id, "Fuck it dude")
+        elif text.lower() == '/github':
+            bot.send_message(chat_id, f"{bot.SERVER_URL}/{chat_id}/github")
         else:
             bot.send_message(chat_id, text)
     return Response('OK', status=200)
 
 
-@app.route('/github', methods=['POST'])
-def github_event():
+@app.route('/<chat_id>/github', methods=['POST'])
+def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
         pprint(request.json)
-        bot.send_message('847119416', 'hello from github')
-        bot.send_message('847119416', str(request.json))
+        bot.send_message(chat_id, 'hello from github')
+        bot.send_message(chat_id, str(request.json))
         return request.json
     return json.dumps({"msg": "No Response"})
