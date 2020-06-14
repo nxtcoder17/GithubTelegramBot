@@ -20,14 +20,6 @@ def index():
             bot.send_message(chat_id, "Fuck it dude")
         elif text.lower() == '/github':
             bot.send_message(chat_id, f"{bot.SERVER_URL}/{chat_id}/github")
-        elif text.lower() == 'ok':
-            ab="Anshuman"
-            bot.send_formatted_message(chat_id, f"""
-[Github](https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png)
-Name: *{ab}*
-Name: *Anshuman*
-"""
-                                       )
         else:
             bot.send_message(chat_id, text)
     return Response('OK', status=200)
@@ -52,7 +44,7 @@ def github_event(chat_id):
         bot.send_formatted_message(chat_id, f"""
 﫯 <b>{email}</b>
  <b>{name}</b>
-<a href="{repo_url}"><b>  {repo_name}</b></a>
+<a href="{repo_url}"><b> {repo_name}</b></a>
  <b>{message}</b> <u>{commit_url}</u>
 """)
         return Response('OK', status=200)
