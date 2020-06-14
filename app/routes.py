@@ -27,7 +27,8 @@ def index():
 
 def parse_github_response(github_resp):
     pusher_email, pusher_name = github_resp['pusher']['email'], github_resp['pusher']['name']
-    return pusher_email, pusher_name
+    sender_img = github_resp['sender']['avatar_url']
+    return pusher_email, pusher_name, sender_img
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
