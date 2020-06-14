@@ -45,7 +45,6 @@ def parse_github_response(github_resp):
 @app.route('/<chat_id>/github', methods=['POST'])
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
-        pprint(request.json)
         data = parse_github_response(request.json)
         msg = f"""
                 Email: *{data.email}* 
