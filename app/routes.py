@@ -25,11 +25,16 @@ def index():
     return Response('OK', status=200)
 
 
+def parse_github_response(github_resp):
+    pusher_email, pusher_name = github_resp['pusher']['email'], github_resp['pusher']['name']
+    return pusher_email, pusher_name
+
+
 @app.route('/<chat_id>/github', methods=['POST'])
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
         pprint(request.json)
         bot.send_message(chat_id, 'hello from github')
-        bot.send_message(chat_id, str(request.json))
+        bot.send_message(chat_id, ' '.join(list(parse_github_response(request.json))))
         return request.json
     return json.dumps({"msg": "No Response"})
