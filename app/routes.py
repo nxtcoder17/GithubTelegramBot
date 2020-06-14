@@ -53,8 +53,7 @@ def github_event(chat_id):
 email: <b>{email}</b>
 name: <b>{name}</b>
 <a href="{repo_url}"><b>{repo_name}</b></a>
- <b>{message}</b>
- <u>{commit_url}</u>
+ <b>{message}</b> <u>{commit_url}</u>
 """)
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
