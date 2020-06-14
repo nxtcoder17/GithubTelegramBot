@@ -1,4 +1,6 @@
 from app import app
+from flask import request
+import json
 
 
 @app.route('/')
@@ -8,8 +10,8 @@ def index():
 
 
 @app.route('/github', methods=['POST'])
-def github_event(req):
-    if req.headers['content-type'] == 'application/json':
-        print(req.json)
-        return req.json
-    return req
+def github_event():
+    if request.headers['content-type'] == 'application/json':
+        print(request.json)
+        return request.json
+    return json.dumps({"msg": "No Response"})
