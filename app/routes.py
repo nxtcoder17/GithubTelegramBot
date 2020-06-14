@@ -43,3 +43,4 @@ def github_event(chat_id):
         bot.send_formatted_message(chat_id, msg)
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
+
