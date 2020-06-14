@@ -12,4 +12,4 @@ def github_event(req):
     if req.headers['content-type'] == 'application/json':
         print(req.json)
         return req.json
-    return False
+    return req
