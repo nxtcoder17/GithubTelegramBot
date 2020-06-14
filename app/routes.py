@@ -34,19 +34,19 @@ def index():
 
 
 def parse_github_response(github_resp):
-    return dict(
-        email=github_resp['pusher']['email'],
-        name=github_resp['pusher']['name'],
-        repo_name=github_resp['repository']['full_name'],
-        repo_url=github_resp['repository']['html_url']
+    return (
+        github_resp['pusher']['email'],
+        github_resp['pusher']['name'],
+        github_resp['repository']['full_name'],
+        github_resp['repository']['html_url']
     )
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
-        data = parse_github_response(request.json)
-        msg = """ Email: *{}* """.format(data['email'])
+        email, name, repo_name, repo_url = parse_github_response(request.json)
+        msg = f""" Email: *{email}* """
         print(msg)
         bot.send_formatted_message(chat_id, msg)
         return Response('OK', status=200)
