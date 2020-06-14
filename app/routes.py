@@ -36,5 +36,5 @@ def github_event(chat_id):
         pprint(request.json)
         bot.send_message(chat_id, 'hello from github')
         bot.send_message(chat_id, ' '.join(list(parse_github_response(request.json))))
-        return request.json
+        return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
