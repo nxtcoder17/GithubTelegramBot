@@ -49,7 +49,7 @@ def github_event(chat_id):
         msg = f"""
 Email: *{data['email']}*
 Name : *{data['name']}*
-[{data['repo_name']}]({data['repo_url']})
+[hi]({data['repo_url']})
 """
         print(msg)
         bot.send_formatted_message(chat_id, msg)
