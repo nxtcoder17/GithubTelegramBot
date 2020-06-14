@@ -38,11 +38,8 @@ def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
         pprint(request.json)
         email, name, img = parse_github_response(request.json)
-        msg = f"""
-            Email: **{email}**
-            Name: **{name}**
-            []({img})
-        """
+        msg = f"""Email: *{email}* Name: *{name}* []({img})"""
+        print(msg)
         bot.send_formatted_message(chat_id, msg)
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
