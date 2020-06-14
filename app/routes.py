@@ -23,10 +23,10 @@ def index():
         elif text.lower() == 'ok':
             ab="Anshuman"
             bot.send_formatted_message(chat_id, f"""
-               [Github](https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png)
-               Name: *{ab}*
-                Name: *Anshuman*
-            """
+[Github](https://github.githubassets.com/images/modules/logos_page/GitHub-Logo.png)
+Name: *{ab}*
+Name: *Anshuman*
+"""
                                        )
         else:
             bot.send_message(chat_id, text)
@@ -46,8 +46,8 @@ def parse_github_response(github_resp):
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
         email, name, repo_name, repo_url = parse_github_response(request.json)
-        msg = f""" Email: *{email}* """
-        print(msg)
-        bot.send_formatted_message(chat_id, msg)
+        bot.send_formatted_message(chat_id, f"""
+Email: {email}
+""")
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
