@@ -48,6 +48,8 @@ def github_event(chat_id):
         email, name, repo_name, repo_url = parse_github_response(request.json)
         bot.send_formatted_message(chat_id, f"""
 Email: <b>{email}</b>
+Name: <b>{name}</b>
+<a href="{repo_url}">{repo_name}</a>
 """)
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
