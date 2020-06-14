@@ -24,6 +24,6 @@ def send_message(chat_id, text):
 
 def send_formatted_message(chat_id, text):
     resp = requests.post(f"{BASE_URL}/sendMessage", json=dict(chat_id=chat_id, text=text,
-                                                              parse_mode='HTML',
+                                                              parse_mode='MarkdownV2',
                                                               ))
     return resp.status_code == 200
