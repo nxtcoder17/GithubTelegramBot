@@ -52,7 +52,7 @@ def github_event(chat_id):
         bot.send_formatted_message(chat_id, f"""
 﫯 <b>{email}</b>
  <b>{name}</b>
-<a href="{repo_url}"><b>  {repo_name}</b></a>
+<a href="{repo_url}"><b>  {repo_name}</b></a>
  <b>{message}</b> <u>{commit_url}</u>
 """)
         return Response('OK', status=200)
