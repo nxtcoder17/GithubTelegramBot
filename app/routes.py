@@ -48,6 +48,7 @@ def parse_github_response(github_resp):
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
         email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)
+
         bot.send_formatted_message(chat_id, f"""
 Email: <b>{email}</b>
 Name: <b>{name}</b>
