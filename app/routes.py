@@ -26,26 +26,28 @@ def index():
 
 
 def parse_github_response(github_resp):
-    return (
-        github_resp['pusher']['email'],
-        github_resp['pusher']['name'],
-        github_resp['repository']['full_name'],
-        github_resp['repository']['html_url'],
-        github_resp['head_commit']['message'],
-        github_resp['head_commit']['url'],
+    return dict(
+        email=github_resp['pusher']['email'],
+        name=github_resp['pusher']['name'],
+        full_name=github_resp['repository']['full_name'],
+        repo_url=github_resp['repository']['html_url'],
+        message=github_resp['head_commit']['message'],
+        commit_url=github_resp['head_commit']['url'],
     )
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
 def github_event(chat_id):
     if request.headers['content-type'] == 'application/json':
-        email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)
+        data = parse_github_response(request.json)
+        # email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)
 
         bot.send_formatted_message(chat_id, f"""
-﫯 <b>{email}</b>
- <b>{name}</b>
-<a href="{repo_url}"><b> {repo_name}</b></a>
- <b>{message}</b> <u>{commit_url}</u>
-""")
+            﫯 <b>{data.email}</b>
+             <b>{data.name}</b>
+             <b>{data.message}</b>
+            <u>{data.commit_url}</u>
+        """)
+
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
