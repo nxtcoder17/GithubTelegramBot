@@ -29,7 +29,7 @@ def parse_github_response(github_resp):
     return dict(
         email=github_resp['pusher']['email'],
         name=github_resp['pusher']['name'],
-        full_name=github_resp['repository']['full_name'],
+        repo_name=github_resp['repository']['full_name'],
         repo_url=github_resp['repository']['html_url'],
         message=github_resp['head_commit']['message'],
         commit_url=github_resp['head_commit']['url'],
@@ -47,7 +47,7 @@ def github_event(chat_id):
  <b>{data['name']}</b>
  <b>{data['message']}</b>
 <u>{data['commit_url']}</u>
-<a href="{data['repo_url']}">&#10;</a>
+<a href="{data['repo_url']}">{data['repo_name']}</a>
         """)
 
         return Response('OK', status=200)
