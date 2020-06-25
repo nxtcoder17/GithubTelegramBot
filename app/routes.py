@@ -5,8 +5,12 @@ from pprint import pprint
 
 
 def parse_message(msg):
-    chat_id, text = msg['message']['chat']['id'], msg['message']['text']
+    if 'message' in msg:
+        chat_id, text = msg['message']['chat']['id'], msg['message']['text']
+    else:
+        chat_id, text = msg['edited_message']['chat']['id'], msg['edited_message']['text']
     return chat_id, text
+
 
 @app.route('/', methods=['POST', 'GET'])
 def index():
@@ -50,14 +54,19 @@ def github_event(chat_id):
 # <a href="{data['repo_url']}">{data['repo_name']}</a>
 # [![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
 # """)
-        email_msg = f"![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
+        email_msg = f"[![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
                     "(https://shields.io/)"
+        email_msg = f"﫯 <b>{data['email']}</b>"
+
+        email_msg = f"<a src='https://img.shields.io/badge/EMAIL-{data['email']}-green.svg'>{data['email']}</a>"
 
         msg = r"""
 {email}
+<a src=https://img.shields.io/badge/EMAIL-nxtcoder17@gmail.com-green.svg>.</a>
 """
 
         bot.send_formatted_message(chat_id, msg.format(email=email_msg))
-
+        # bot.send_formatted_message(chat_id, email_msg)
+        print(msg.format(email=email_msg))
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
