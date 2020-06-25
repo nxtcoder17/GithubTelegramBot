@@ -32,8 +32,10 @@ def parse_github_response(github_resp):
     added = set()
     modified = set()
     removed = set()
+    messages = []
+
     for commit in github_resp['commits']:
-        message = commit['message']
+        messages.append(commit['message'])
         for path in commit['added']:
             added.add(path)
 
@@ -50,10 +52,18 @@ def parse_github_response(github_resp):
         repo_url=github_resp['repository']['html_url'],
         message=github_resp['head_commit']['message'],
         commit_url=github_resp['head_commit']['url'],
-        added = added,
-        removed = removed,
-        modified = removed,
+        messages = messages,
+        added = list(added),
+        removed = list(removed),
+        modified = list(modified),
     )
+
+
+# HTML Entities work in Telegram HTML parse_mode
+# URL: https://dev.w3.org/html5/html-author/charref
+
+NEWLINE="&#x0000A;"
+TAB="&#x02015;"
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
@@ -68,24 +78,25 @@ def github_event(chat_id):
         commit_url = f"{data['commit_url']}"
         repo = f"""<a href="{data['repo_url']}">&#x02026;</a>"""
 
-        files = "&#x0000A;&#x00009;a&#x02026;".join(data['modified']),
-
+        print(data['messages'], len(data['messages']))
+        commit_messages = r"&#x0000A;".join(data['messages'])
+        print("Commit Messages", commit_messages)
+        print("Executioner", r"&#x0000A;".join(list(data['messages']))),
+        print("Executioner", r"&#x0000A;".join(data['messages']))
         msg = r"""
 {email}
 {name}
 {repo}
 {commit}
 {commit_url}
-
-Modified Files
-{files}
 """
 
-        bot.send_formatted_message(chat_id, msg.format(email=email_msg, name=name_msg,
+        bot.send_formatted_message(chat_id, msg.format(email=email_msg,
+                                                       name=name_msg,
                                                        repo=repo,
-                                                       commit=commit_msg, commit_url=commit_url,
-                                                       files=files))
-        # bot.send_formatted_message(chat_id, email_msg)
-        print(msg.format(email=email_msg))
+                                                       commit=commit_msg,
+                                                       commit_url=commit_url,
+                                                       )
+                                   )
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
