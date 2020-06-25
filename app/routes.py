@@ -31,11 +31,11 @@ def index():
 def parse_github_response(github_resp):
     return dict(
         email=github_resp['pusher']['email'],
-        # name=github_resp['pusher']['name'],
-        # repo_name=github_resp['repository']['full_name'],
-        # repo_url=github_resp['repository']['html_url'],
-        # message=github_resp['head_commit']['message'],
-        # commit_url=github_resp['head_commit']['url'],
+        name=github_resp['pusher']['name'],
+        repo_name=github_resp['repository']['full_name'],
+        repo_url=github_resp['repository']['html_url'],
+        message=github_resp['head_commit']['message'],
+        commit_url=github_resp['head_commit']['url'],
     )
 
 
@@ -54,18 +54,24 @@ def github_event(chat_id):
 # <a href="{data['repo_url']}">{data['repo_name']}</a>
 # [![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
 # """)
-        email_msg = f"[![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
-                    "(https://shields.io/)"
+#         email_msg = f"[![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
+#                     "(https://shields.io/)"
         email_msg = f"﫯 <b>{data['email']}</b>"
+        name_msg = f" <b>{data['name']}</b>"
+        commit_msg = f" <b>{data['message']}</b>"
+        commit_url = f"{data['commit_url']}"
 
-        email_msg = f"<a src='https://img.shields.io/badge/EMAIL-{data['email']}-green.svg'>{data['email']}</a>"
+        # email_msg = f"<a src='https://img.shields.io/badge/EMAIL-{data['email']}-green.svg'>{data['email']}</a>"
 
         msg = r"""
 {email}
-<a src=https://img.shields.io/badge/EMAIL-nxtcoder17@gmail.com-green.svg>.</a>
+{name}
+{commit}
+{commit_url}
 """
 
-        bot.send_formatted_message(chat_id, msg.format(email=email_msg))
+        bot.send_formatted_message(chat_id, msg.format(email=email_msg, name=name_msg,
+                                                       commit=commit_msg, commit_url=commit_url))
         # bot.send_formatted_message(chat_id, email_msg)
         print(msg.format(email=email_msg))
         return Response('OK', status=200)
