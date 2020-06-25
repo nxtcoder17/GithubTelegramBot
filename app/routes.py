@@ -42,12 +42,21 @@ def github_event(chat_id):
         data = parse_github_response(request.json)
         # email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)
 
-        bot.send_formatted_message(chat_id, f"""
-﫯 <b>{data['email']}</b>
- <b>{data['name']}</b>
- <b>{data['message']}</b>
-<a href="{data['repo_url']}">{data['repo_name']}</a>
-""")
+#         bot.send_formatted_message(chat_id, f"""
+# 﫯 <b>{data['email']}</b>
+#  <b>{data['name']}</b>
+#  <b>{data['message']}</b>
+# <a href="{data['repo_url']}">{data['repo_name']}</a>
+# [![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
+# """)
+        email_msg = f"![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
+                    "(https://shields.io/)"
+
+        msg = r"""
+{email}
+"""
+
+        bot.send_formatted_message(chat_id, msg.format(email=email_msg))
 
         return Response('OK', status=200)
     return json.dumps({"msg": "No Response"})
