@@ -45,23 +45,11 @@ def github_event(chat_id):
     pprint(request.json);
     if request.headers['content-type'] == 'application/json':
         data = parse_github_response(request.json)
-        # email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)
-
-#         bot.send_formatted_message(chat_id, f"""
-# 﫯 <b>{data['email']}</b>
-#  <b>{data['name']}</b>
-#  <b>{data['message']}</b>
-# <a href="{data['repo_url']}">{data['repo_name']}</a>
-# [![Generic badge](https://img.shields.io/badge/<SUBJECT>-<STATUS>-<COLOR>.svg)](https://shields.io/)
-# """)
-#         email_msg = f"[![Generic badge](https://img.shields.io/badge/EMAIL-{data['email']}-green.svg)]" + \
-#                     "(https://shields.io/)"
         email_msg = f"﫯 <b>{data['email']}</b>"
         name_msg = f" <b>{data['name']}</b>"
         commit_msg = f" <b>{data['message']}</b>"
         commit_url = f"{data['commit_url']}"
-        # repo = f"""<a href="{data['repo_url']}">{data['repo_name']}</a>"""
-        repo = f"""<a href="{data['repo_url']}"><br/></a>"""
+        repo = f"""<a href="{data['repo_url']}">&#x0000A;</a>"""
 
         msg = r"""
 {email}
