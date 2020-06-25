@@ -49,7 +49,7 @@ def github_event(chat_id):
         name_msg = f" <b>{data['name']}</b>"
         commit_msg = f" <b>{data['message']}</b>"
         commit_url = f"{data['commit_url']}"
-        repo = f"""<a href="{data['repo_url']}">&#x0000A;</a>"""
+        repo = f"""<a href="{data['repo_url']}">&#x02026;</a>"""
 
         msg = r"""
 {email}
