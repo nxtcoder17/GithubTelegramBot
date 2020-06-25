@@ -62,8 +62,6 @@ def github_event(chat_id):
         commit_url = f"{data['commit_url']}"
         repo = f"""<a href="{data['repo_url']}">{data['repo_name']}</a>"""
 
-        # email_msg = f"<a src='https://img.shields.io/badge/EMAIL-{data['email']}-green.svg'>{data['email']}</a>"
-
         msg = r"""
 {email}
 {name}
