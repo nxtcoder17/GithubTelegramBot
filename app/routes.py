@@ -16,8 +16,6 @@ def parse_message(msg):
 def index():
     if request.method == 'POST':
         msg = request.json
-        pprint(msg)
-        # return Response('OK', status=200)
         chat_id, text = parse_message(msg)
         if text.upper() == 'HI':
             bot.send_message(chat_id, "Fuck it dude")
