@@ -60,17 +60,20 @@ def github_event(chat_id):
         name_msg = f" <b>{data['name']}</b>"
         commit_msg = f" <b>{data['message']}</b>"
         commit_url = f"{data['commit_url']}"
+        repo = f"""<a href="{data['repo_url']}">{data['repo_name']}</a>"""
 
         # email_msg = f"<a src='https://img.shields.io/badge/EMAIL-{data['email']}-green.svg'>{data['email']}</a>"
 
         msg = r"""
 {email}
 {name}
+{repo}
 {commit}
 {commit_url}
 """
 
         bot.send_formatted_message(chat_id, msg.format(email=email_msg, name=name_msg,
+                                                       repo=repo,
                                                        commit=commit_msg, commit_url=commit_url))
         # bot.send_formatted_message(chat_id, email_msg)
         print(msg.format(email=email_msg))
