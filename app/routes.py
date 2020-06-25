@@ -8,7 +8,6 @@ def parse_message(msg):
     chat_id, text = msg['message']['chat']['id'], msg['message']['text']
     return chat_id, text
 
-
 @app.route('/', methods=['POST', 'GET'])
 def index():
     if request.method == 'POST':
@@ -28,16 +27,18 @@ def index():
 def parse_github_response(github_resp):
     return dict(
         email=github_resp['pusher']['email'],
-        name=github_resp['pusher']['name'],
-        repo_name=github_resp['repository']['full_name'],
-        repo_url=github_resp['repository']['html_url'],
-        message=github_resp['head_commit']['message'],
-        commit_url=github_resp['head_commit']['url'],
+        # name=github_resp['pusher']['name'],
+        # repo_name=github_resp['repository']['full_name'],
+        # repo_url=github_resp['repository']['html_url'],
+        # message=github_resp['head_commit']['message'],
+        # commit_url=github_resp['head_commit']['url'],
     )
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
 def github_event(chat_id):
+    print("I am here");
+    pprint(request.json);
     if request.headers['content-type'] == 'application/json':
         data = parse_github_response(request.json)
         # email, name, repo_name, repo_url, message, commit_url = parse_github_response(request.json)

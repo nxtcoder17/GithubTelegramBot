@@ -6,7 +6,7 @@ BOT_TOKEN = "1233261801:AAFamDNXezo-kdf370embNI0HRFSLXlGnIw"
 BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 if 'USER' in os.environ and os.environ['USER'] == "nxtcoder17":
-    SERVER_URL = 'https://4a1216b222d2.ngrok.io'
+    SERVER_URL = 'https://7d5bd805be2a.ngrok.io'
 else:
     SERVER_URL = 'https://githubtelegrambot.herokuapp.com'
 
