@@ -29,6 +29,20 @@ def index():
 
 
 def parse_github_response(github_resp):
+    added = set()
+    modified = set()
+    removed = set()
+    for commit in github_resp['commits']:
+        message = commit['message']
+        for path in commit['added']:
+            added.add(path)
+
+        for path in commit['removed']:
+            modified.add(path)
+
+        for path in commit['modified']:
+            removed.add(path)
+
     return dict(
         email=github_resp['pusher']['email'],
         name=github_resp['pusher']['name'],
@@ -36,6 +50,9 @@ def parse_github_response(github_resp):
         repo_url=github_resp['repository']['html_url'],
         message=github_resp['head_commit']['message'],
         commit_url=github_resp['head_commit']['url'],
+        added = added,
+        removed = removed,
+        modified = removed,
     )
 
 
@@ -51,17 +68,23 @@ def github_event(chat_id):
         commit_url = f"{data['commit_url']}"
         repo = f"""<a href="{data['repo_url']}">&#x02026;</a>"""
 
+        files = "&#x0000A;&#x00009;a&#x02026;".join(data['modified']),
+
         msg = r"""
 {email}
 {name}
 {repo}
 {commit}
 {commit_url}
+
+Modified Files
+{files}
 """
 
         bot.send_formatted_message(chat_id, msg.format(email=email_msg, name=name_msg,
                                                        repo=repo,
-                                                       commit=commit_msg, commit_url=commit_url))
+                                                       commit=commit_msg, commit_url=commit_url,
+                                                       files=files))
         # bot.send_formatted_message(chat_id, email_msg)
         print(msg.format(email=email_msg))
         return Response('OK', status=200)
