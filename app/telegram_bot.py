@@ -6,7 +6,7 @@ BOT_TOKEN = "1233261801:AAFamDNXezo-kdf370embNI0HRFSLXlGnIw"
 BASE_URL = f"https://api.telegram.org/bot{BOT_TOKEN}"
 
 if 'USER' in os.environ and os.environ['USER'] == "nxtcoder17":
-    SERVER_URL = 'https://7d5bd805be2a.ngrok.io'
+    SERVER_URL = 'https://8b77772d176e.ngrok.io'
 else:
     SERVER_URL = 'https://githubtelegrambot.herokuapp.com'
 
@@ -25,6 +25,6 @@ def send_message(chat_id, text):
 def send_formatted_message(chat_id, text):
     resp = requests.post(f"{BASE_URL}/sendMessage", json=dict(chat_id=chat_id, text=text,
                                                               parse_mode='HTML',
-                                                              disable_web_page_preview=False,
+                                                              # disable_web_page_preview=False,
                                                               ))
     return resp.status_code == 200
