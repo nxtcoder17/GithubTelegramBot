@@ -60,8 +60,8 @@ def parse_github_response(github_resp):
 # HTML Entities work in Telegram HTML parse_mode
 # URL: https://dev.w3.org/html5/html-author/charref
 
-NEWLINE="&#x0000A;"
-TAB="&#x02015;"
+NEWLINE = "&#x0000A;"
+TAB = "&#x02015;"
 
 
 @app.route('/<chat_id>/github', methods=['POST'])
