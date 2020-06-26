@@ -73,7 +73,7 @@ def github_event(chat_id):
         email_msg = f"﫯 <b>{data['email']}</b>"
         name_msg = f" <b>{data['name']}</b>"
         commit_msg = f" <b>{data['message']}</b>"
-        commit_url = f"""<a href="{data['commit_url']}">{data['commit_url'].split('/')[-1][:8]}</a>"""
+        commit_url = f"""<a href="{data['commit_url']}"># {data['commit_url'].split('/')[-1][:10]}</a>"""
         repo = f"""<a href="{data['repo_url']}">&#x02026;</a>"""
 
         print(data['messages'], len(data['messages']))
